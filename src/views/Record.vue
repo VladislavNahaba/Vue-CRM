@@ -5,12 +5,14 @@
     </div>
 
     <form class="form">
-      <div class="input-field" >
-        <select>
-          <option
-          >name cat</option>
+      <div class="input-field col s12">
+        <select ref="select">
+          <option value="" disabled selected>Choose your option</option>
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+          <option value="3">Option 3</option>
         </select>
-        <label>Выберите категорию</label>
+        <label>Select</label>
       </div>
 
       <p>
@@ -65,9 +67,12 @@
 </template>
 
 <script>
-  export default {
-    name: "Record"
+export default {
+  name: "Record",
+  mounted() {
+    window.M.FormSelect.init(this.$refs.select);
   }
+}
 </script>
 
 <style scoped>
