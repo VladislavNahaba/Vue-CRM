@@ -1,16 +1,8 @@
 import firebase from "firebase/app";
 
 export default {
-  state: {
-    currency: []
-  },
-  mutations: {
-    setCurrency(state, currency) {
-      state.currency = currency;
-    }
-  },
   actions: {
-    async fetchCurrency() {
+    async fetchCurrency({commit}) {
       try {
         const currency = (await firebase.database().ref(`/currency`).orderByKey().once('value')).val();
         const timeStampDiff = Number(process.env.VUE_APP_MAX_TIMESTAMP_FIXER) * 1000;
@@ -24,12 +16,10 @@ export default {
           return parsedRes;
         }
       } catch (e) {
-        console.log(e);
+        commit('setError', e);
+        throw e;
       }
     }
-  },
-  getters: {
-    currency: s => s.currency
   }
 }
 
