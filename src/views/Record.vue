@@ -69,8 +69,16 @@
 <script>
 export default {
   name: "Record",
+  data: () => ({
+    select: null
+  }),
   mounted() {
-    window.M.FormSelect.init(this.$refs.select);
+    this.select = window.M.FormSelect.init(this.$refs.select);
+  },
+  beforeDestroy() {
+    if (this.select && this.select.destroy) {
+      this.select.destroy();
+    }
   }
 }
 </script>
