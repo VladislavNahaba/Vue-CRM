@@ -24,26 +24,6 @@
         <small v-if="$v.password.$dirty && !$v.password.required" class="helper-text invalid">Введите пароль</small>
         <small v-else-if="$v.password.$dirty && !$v.password.minLength" class="helper-text invalid">Минимальная длина пароля 6 символов</small>
       </div>
-      <div class="input-field">
-        <input
-            id="name"
-            type="text"
-            v-model.trim="name"
-            :class="{invalid: $v.name.$dirty && !$v.name.required}"
-        >
-        <label for="name">Имя</label>
-        <small v-if="$v.name.$dirty && !$v.name.required" class="helper-text invalid">Введите имя</small>
-      </div>
-      <p>
-        <label>
-          <input
-              type="checkbox"
-              v-model="agree"
-          />
-          <span>С правилами согласен</span>
-        </label>
-      </p>
-      <small v-if="$v.agree.$dirty && !$v.agree.checked" class="helper-text invalid">Требуется соглсание с правилами</small>
     </div>
     <div class="card-action">
       <div>
@@ -51,14 +31,14 @@
             class="btn waves-effect waves-light auth-submit"
             type="submit"
         >
-          Зарегистрироваться
+          Войти
           <i class="material-icons right">send</i>
         </button>
       </div>
 
       <p class="center">
-        Уже есть аккаунт?
-        <router-link to="/login">Войти!</router-link>
+        Нет аккаунта?
+        <router-link to="/register">Зарегистрироваться</router-link>
       </p>
     </div>
   </form>
@@ -66,19 +46,21 @@
 
 <script>
 import {email, required, minLength} from 'vuelidate/lib/validators'
+import messages from "../utils/messages";
 export default {
-  name: "Register",
+  name: "LoginNotAuth",
   data: () => ({
     email: '',
-    password: '',
-    name: '',
-    agree: false
+    password: ''
   }),
   validations: {
     email: {required, email},
-    password: {required, minLength: minLength(6)},
-    name: {required},
-    agree: {checked: v => v}
+    password: {required, minLength: minLength(6)}
+  },
+  mounted() {
+    if (messages[this.$route.query.message]) {
+      this.$message(messages[this.$route.query.message]);
+    }
   },
   methods: {
     async submitHandler() {
@@ -88,13 +70,11 @@ export default {
       }
       const formData = {
         email: this.email,
-        password: this.password,
-        name: this.name
+        password: this.password
       };
-
       try {
-        await this.$store.dispatch('register', formData);
-        this.$router.push('/');
+        await this.$store.dispatch('login', formData);
+        await this.$router.push('/');
       } catch (e) {
         console.log(e);
       }

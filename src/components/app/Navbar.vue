@@ -41,39 +41,39 @@
 </template>
 
 <script>
-  export default {
-    name: "Navbar",
-    data: () => ({
-      date: new Date(),
-      interval: null,
-      dropdown: null
-    }),
-    mounted() {
-      this.dropdown = window.M.Dropdown.init(this.$refs.dropdown, {
-        constrainWidth: true
-      });
-      this.interval = setInterval(() => {
-        this.date = new Date()
-      }, 1000);
-    },
-    computed: {
-      name() {
-        return this.$store.getters.info.name
-      }
-    },
-    methods: {
-      async logout() {
-        await this.$store.dispatch('logout');
-        this.$router.push('/login?message=logout');
-      }
-    },
-    beforeDestroy() {
-      clearInterval(this.interval);
-      if (this.dropdown && this.dropdown.destroy) {
-        this.dropdown.destroy();
-      }
+export default {
+  name: "Navbar",
+  data: () => ({
+    date: new Date(),
+    interval: null,
+    dropdown: null
+  }),
+  mounted() {
+    this.dropdown = window.M.Dropdown.init(this.$refs.dropdown, {
+      constrainWidth: true
+    });
+    this.interval = setInterval(() => {
+      this.date = new Date()
+    }, 1000);
+  },
+  computed: {
+    name() {
+      return this.$store.getters.info.name
+    }
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch('logout');
+      this.$router.push('/login?message=logout');
+    }
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
+    if (this.dropdown && this.dropdown.destroy) {
+      this.dropdown.destroy();
     }
   }
+}
 </script>
 
 <style scoped>

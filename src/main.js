@@ -3,6 +3,7 @@ import Vuelidate from "vuelidate/src";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import Paginate from "vuejs-paginate";
 import dateFilter from "./filters/date.filter";
 import currencyFilter from "./filters/currency.filter";
 import tooltipDirective from "./directives/tooltip.directive";
@@ -22,6 +23,7 @@ Vue.use(messagePlugin);
 Vue.filter('date', dateFilter);
 Vue.filter('currency', currencyFilter);
 Vue.directive('tooltip', tooltipDirective);
+Vue.component('paginate', Paginate);
 Vue.component('Loader', Loader);
 
 const firebaseConfig = {
