@@ -1,7 +1,7 @@
 <template>
   <form class="card auth-card" @submit.prevent="submitHandler">
     <div class="card-content">
-      <span class="card-title">Домашняя бухгалтерия</span>
+      <span class="card-title">{{'home_accounting' | localize(currentLocale)}}</span>
       <div class="input-field">
         <input
             id="email"
@@ -20,7 +20,7 @@
             v-model.trim="password"
             :class="{invalid: ($v.password.$dirty && !$v.password.required) || ($v.password.$dirty && !$v.password.minLength)}"
         >
-        <label for="password">Пароль</label>
+        <label for="password">{{'password' | localize(currentLocale)}}</label>
         <small v-if="$v.password.$dirty && !$v.password.required" class="helper-text invalid">Введите пароль</small>
         <small v-else-if="$v.password.$dirty && !$v.password.minLength" class="helper-text invalid">Минимальная длина пароля 6 символов</small>
       </div>
@@ -31,14 +31,14 @@
             class="btn waves-effect waves-light auth-submit"
             type="submit"
         >
-          Войти
+          {{'enter' | localize(currentLocale)}}
           <i class="material-icons right">send</i>
         </button>
       </div>
 
       <p class="center">
-        Нет аккаунта?
-        <router-link to="/register">Зарегистрироваться</router-link>
+        {{'no_account' | localize(currentLocale)}}?
+        <router-link to="/register">{{'register' | localize(currentLocale)}}</router-link>
       </p>
     </div>
   </form>
@@ -47,11 +47,13 @@
 <script>
 import {email, required, minLength} from 'vuelidate/lib/validators'
 import messages from "../utils/messages";
+import localizeFilter from "../filters/localize.filter";
 export default {
   name: "LoginNotAuth",
   data: () => ({
     email: '',
-    password: ''
+    password: '',
+    currentLocale: 'ru-RU'
   }),
   validations: {
     email: {required, email},
@@ -63,6 +65,13 @@ export default {
     }
   },
   methods: {
+    determineLocale() {
+      if (!localizeFilter()) {
+        this.currentLocale = window.navigator.language || window.navigator.userLanguage;
+      } else {
+        this.currentLocale = localizeFilter();
+      }
+    },
     async submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch();

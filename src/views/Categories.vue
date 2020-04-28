@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>Категории</h3>
+      <h3>{{'menu_category' | localize}}</h3>
     </div>
 
     <section>
@@ -14,7 +14,7 @@
             :key="categories.length + updateCount"
             :categories="categories"
         />
-        <p v-else class="center">Нет категорий</p>
+        <p v-else class="center">{{'no_categories' | localize}}</p>
       </div>
     </section>
   </div>

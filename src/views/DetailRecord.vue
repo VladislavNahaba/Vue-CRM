@@ -3,7 +3,7 @@
     <Loader v-if="loading" />
     <div v-else-if="record">
       <div class="breadcrumb-wrap">
-        <router-link to="/history" class="breadcrumb">История</router-link>
+        <router-link to="/history" class="breadcrumb">{{'menu_history' | localize}}</router-link>
         <a @click.prevent class="breadcrumb">
           {{record.detailText}}
         </a>
@@ -12,9 +12,9 @@
         <div class="col s12 m6">
           <div class="card" :class="[record.detailColor]">
             <div class="card-content white-text">
-              <p>Описание: {{record.description}}</p>
-              <p>Сумма: {{record.amount | currency}}</p>
-              <p>Категория: {{record.categoryName}}</p>
+              <p>{{'description' | localize}}: {{record.description}}</p>
+              <p>{{'sum' | localize}}: {{record.amount | currency}}</p>
+              <p>{{'category' | localize}}: {{record.categoryName}}</p>
 
               <small>{{record.date | date('datetime')}}</small>
             </div>
@@ -22,11 +22,12 @@
         </div>
       </div>
     </div>
-    <p class="center" v-else>Запись с id=<strong>{{$route.params.id}}</strong> не найдена</p>
+    <p class="center" v-else>{{'record' | localize}} id=<strong>{{$route.params.id}}</strong> {{'not_found_f' | localize}}</p>
   </div>
 </template>
 
 <script>
+import localizeFilter from "../filters/localize.filter";
 export default {
   name: "DetailRecord",
   data: () => ({
@@ -38,7 +39,7 @@ export default {
     const record = await this.$store.dispatch('fetchRecordById', id);
     const category = await this.$store.dispatch('fetchCategoryById', record.categoryId);
     const detailColor = record.type === 'income' ? 'green' : 'red';
-    const detailText = record.type === 'income' ? 'Доход' : 'Расход';
+    const detailText = record.type === 'income' ? localizeFilter('income') : localizeFilter('outcome');
     this.record = {
       ...record,
       categoryName: category.title,
