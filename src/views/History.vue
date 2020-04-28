@@ -36,6 +36,11 @@ import paginationMixin from "../mixins/pagination.mixin";
 import {Pie} from "vue-chartjs";
 import localizeFilter from "../filters/localize.filter";
 export default {
+  metaInfo() {
+    return {
+      title: this.$title('menu_history')
+    }
+  },
   name: "History",
   extends: Pie,
   components: {HistoryTable},

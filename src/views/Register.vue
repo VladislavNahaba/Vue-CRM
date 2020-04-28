@@ -1,7 +1,7 @@
 <template>
   <form class="card auth-card" @submit.prevent="submitHandler">
     <div class="card-content">
-      <span class="card-title">Домашняя бухгалтерия</span>
+      <span class="card-title">{{'home_accounting' | localize(currentLocale)}}</span>
       <div class="input-field">
         <input
             id="email"
@@ -10,8 +10,8 @@
             :class="{invalid: ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email)}"
         >
         <label for="email">Email</label>
-        <small v-if="$v.email.$dirty && !$v.email.required" class="helper-text invalid">Поле Email не должно быть пустым</small>
-        <small v-else-if="$v.email.$dirty && !$v.email.email" class="helper-text invalid">Введите корректный Email</small>
+        <small v-if="$v.email.$dirty && !$v.email.required" class="helper-text invalid">{{'validation_email_required' | localize(currentLocale)}}</small>
+        <small v-else-if="$v.email.$dirty && !$v.email.email" class="helper-text invalid">{{'validation_email_incorrect' | localize(currentLocale)}}</small>
       </div>
       <div class="input-field">
         <input
@@ -20,9 +20,9 @@
             v-model.trim="password"
             :class="{invalid: ($v.password.$dirty && !$v.password.required) || ($v.password.$dirty && !$v.password.minLength)}"
         >
-        <label for="password">Пароль</label>
-        <small v-if="$v.password.$dirty && !$v.password.required" class="helper-text invalid">Введите пароль</small>
-        <small v-else-if="$v.password.$dirty && !$v.password.minLength" class="helper-text invalid">Минимальная длина пароля 6 символов</small>
+        <label for="password">{{'password' | localize(currentLocale)}}</label>
+        <small v-if="$v.password.$dirty && !$v.password.required" class="helper-text invalid">{{'validation_password_required' | localize(currentLocale)}}</small>
+        <small v-else-if="$v.password.$dirty && !$v.password.minLength" class="helper-text invalid">{{'validation_password_minimal' | localize(currentLocale)}} - 6</small>
       </div>
       <div class="input-field">
         <input
@@ -31,8 +31,8 @@
             v-model.trim="name"
             :class="{invalid: $v.name.$dirty && !$v.name.required}"
         >
-        <label for="name">Имя</label>
-        <small v-if="$v.name.$dirty && !$v.name.required" class="helper-text invalid">Введите имя</small>
+        <label for="name">{{'name' | localize(currentLocale)}}</label>
+        <small v-if="$v.name.$dirty && !$v.name.required" class="helper-text invalid">{{'validation_name' | localize(currentLocale)}}</small>
       </div>
       <p>
         <label>
@@ -40,10 +40,10 @@
               type="checkbox"
               v-model="agree"
           />
-          <span>С правилами согласен</span>
+          <span>{{'rules_agree' | localize(currentLocale)}}</span>
         </label>
       </p>
-      <small v-if="$v.agree.$dirty && !$v.agree.checked" class="helper-text invalid">Требуется соглсание с правилами</small>
+      <small v-if="$v.agree.$dirty && !$v.agree.checked" class="helper-text invalid">{{'validation_rules_agree' | localize(currentLocale)}}</small>
     </div>
     <div class="card-action">
       <div>
@@ -51,7 +51,7 @@
             class="btn waves-effect waves-light auth-submit"
             type="submit"
         >
-          Зарегистрироваться
+          {{'register' | localize(currentLocale)}}
           <i class="material-icons right">send</i>
         </button>
       </div>
@@ -66,13 +66,20 @@
 
 <script>
 import {email, required, minLength} from 'vuelidate/lib/validators'
+import localizeFilter from "../filters/localize.filter";
 export default {
+  metaInfo() {
+    return {
+      title: this.$title('register')
+    }
+  },
   name: "Register",
   data: () => ({
     email: '',
     password: '',
     name: '',
-    agree: false
+    agree: false,
+    currentLocale: 'ru-RU'
   }),
   validations: {
     email: {required, email},
@@ -81,6 +88,13 @@ export default {
     agree: {checked: v => v}
   },
   methods: {
+    determineLocale() {
+      if (!localizeFilter()) {
+        this.currentLocale = window.navigator.language || window.navigator.userLanguage;
+      } else {
+        this.currentLocale = localizeFilter();
+      }
+    },
     async submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch();

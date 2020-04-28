@@ -11,6 +11,7 @@
   "menu_category": "Categories",
   "new_record": "Create new record",
   "logout": "Logout",
+  "login": "Login",
   "history_title": "Record History",
   "history_no_records": "No Records",
   "history_add_record": "Add Record",
@@ -53,5 +54,15 @@
   "enter": "Enter",
   "no_account": "No account",
   "register": "Register",
-  "password": "Password"
+  "password": "Password",
+  "detail_record": "Record detail",
+  "home": "Home",
+  "validation_email_required": "Required email",
+  "validation_email_incorrect": "Incorrect email",
+  "validation_password_required": "Required password",
+  "validation_password_minimal": "Minimal password length",
+  "validation_name": "Enter the name",
+  "rules_agree": "Accept the rules",
+  "validation_rules_agree": "Rules accept needed",
+  "error": "Error"
 }

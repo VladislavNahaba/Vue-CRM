@@ -11,6 +11,7 @@
   "menu_category": "Категории",
   "new_record": "Создать новую запись",
   "logout": "Выйти",
+  "login": "Войти",
   "history_title": "История записей",
   "history_no_records": "Записей пока нет",
   "history_add_record": "Добавить запись",
@@ -53,5 +54,15 @@
   "enter": "Войти",
   "no_account": "Нет аккаунта",
   "register": "Регистрация",
-  "password": "Пароль"
+  "password": "Пароль",
+  "detail_record": "Данные о записи",
+  "home": "Главная",
+  "validation_email_required": "Поле Email не должно быть пустым",
+  "validation_email_incorrect": "Некорректный email",
+  "validation_password_required": "Введите пароль",
+  "validation_password_minimal": "Минимальная длина пароля",
+  "validation_name": "Введите имя",
+  "rules_agree": "С правилами согласен",
+  "validation_rules_agree": "Требуется согласие с правилами",
+  "error": "Ошибка"
 }

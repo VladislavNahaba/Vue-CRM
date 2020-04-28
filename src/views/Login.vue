@@ -10,6 +10,11 @@ import LoginAuth from "../components/LoginAuth";
 import LoginNotAuth from "../components/LoginNotAuth";
 import firebase from "firebase/app";
 export default {
+  metaInfo() {
+    return {
+      title: this.$title('login')
+    }
+  },
   name: "Login",
   components: {LoginAuth, LoginNotAuth},
   data: () => ({

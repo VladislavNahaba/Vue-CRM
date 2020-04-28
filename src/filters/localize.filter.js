@@ -7,10 +7,10 @@ const locales = {
   'en-US': en
 };
 
-export default function localizeFilter(key, localeForce) {
+export default function localizeFilter(key, localeForce = null) {
   if (!key) {
     return store.getters.info.locale || 'ru-RU';
   }
-  const locale = localeForce ? localeForce : store.getters.info.locale || 'ru-RU';
+  const locale = localeForce ? localeForce : (store.getters.info.locale || 'ru-RU');
   return locales[locale][key] || `[Localize error]: key ${key} not found`;
 }
